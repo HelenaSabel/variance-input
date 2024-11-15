@@ -7,12 +7,16 @@
       <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript"><!--
         
         var parametersBoxes= new Array('prs_T_get-contentsS_tei2xhtml.xsl', 
+				'prs_T_output-imageS_tei2xhtml.xsl', 
 				'prs_F_generate-numberS_tei2xhtml.xsl', 
 				'prs_F_get-idS_tei2xhtml.xsl', 
 				'prs_F_retrieve-next-anchorS_tei2xhtml.xsl');
 
         
         var usedByBoxes= new Array('uB_T_get-contentsS_tei2xhtml.xsl', 
+				'uB_T_output-imageS_tei2xhtml.xsl', 
+				'uB_V_sourceS_tei2xhtml.xsl', 
+				'uB_V_targetS_tei2xhtml.xsl', 
 				'uB_V_transpositionS_tei2xhtml.xsl', 
 				'uB_V_additionS_tei2xhtml.xsl', 
 				'uB_V_substitutionS_tei2xhtml.xsl', 
@@ -23,9 +27,10 @@
 
         var docBoxes= new Array('dS_tei2xhtml.xsl', 
 				'dS_T_get-contentsS_tei2xhtml.xsl', 
+				'dS_T_output-imageS_tei2xhtml.xsl', 
 				'dS_M_S_tei2xhtml.xsl', 
 				'dS_M_nodeM_lbS_tei2xhtml.xsl', 
-				'dS_T_pReplacementS_tei2xhtml.xsl', 
+				'dS_M_pM_lbS_tei2xhtml.xsl', 
 				'dS_M_transposeS_tei2xhtml.xsl', 
 				'dS_M_deletionS_tei2xhtml.xsl', 
 				'dS_M_additionS_tei2xhtml.xsl', 
@@ -34,9 +39,12 @@
 				'dS_M_metamarkM_sourceS_tei2xhtml.xsl', 
 				'dS_M_anchorM_targetS_tei2xhtml.xsl', 
 				'dS_M_metamarkM_targetS_tei2xhtml.xsl', 
-				'dS_M_lbM_allS_tei2xhtml.xsl', 
-				'dS_M_emphM_allS_tei2xhtml.xsl', 
-				'dS_M_pbS_tei2xhtml.xsl', 
+				'dS_M_lbM_defaultsourcetargetS_tei2xhtml.xsl', 
+				'dS_M_emphM_defaultsourcetargetS_tei2xhtml.xsl', 
+				'dS_M_textparentemphM_sourcetargetS_tei2xhtml.xsl', 
+				'dS_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl', 
+				'dS_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl', 
+				'dS_V_sourceS_tei2xhtml.xsl', 
 				'dS_V_transpositionS_tei2xhtml.xsl', 
 				'dS_F_generate-numberS_tei2xhtml.xsl', 
 				'dS_F_get-idS_tei2xhtml.xsl', 
@@ -44,9 +52,10 @@
 				'dS_O_S_tei2xhtml.xsl');
 
         var sourceBoxes= new Array('src_T_get-contentsS_tei2xhtml.xsl', 
+				'src_T_output-imageS_tei2xhtml.xsl', 
 				'src_M_S_tei2xhtml.xsl', 
 				'src_M_nodeM_lbS_tei2xhtml.xsl', 
-				'src_T_pReplacementS_tei2xhtml.xsl', 
+				'src_M_pM_lbS_tei2xhtml.xsl', 
 				'src_M_transposeS_tei2xhtml.xsl', 
 				'src_M_deletionS_tei2xhtml.xsl', 
 				'src_M_additionS_tei2xhtml.xsl', 
@@ -55,9 +64,13 @@
 				'src_M_metamarkM_sourceS_tei2xhtml.xsl', 
 				'src_M_anchorM_targetS_tei2xhtml.xsl', 
 				'src_M_metamarkM_targetS_tei2xhtml.xsl', 
-				'src_M_lbM_allS_tei2xhtml.xsl', 
-				'src_M_emphM_allS_tei2xhtml.xsl', 
-				'src_M_pbS_tei2xhtml.xsl', 
+				'src_M_lbM_defaultsourcetargetS_tei2xhtml.xsl', 
+				'src_M_emphM_defaultsourcetargetS_tei2xhtml.xsl', 
+				'src_M_textparentemphM_sourcetargetS_tei2xhtml.xsl', 
+				'src_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl', 
+				'src_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl', 
+				'src_V_sourceS_tei2xhtml.xsl', 
+				'src_V_targetS_tei2xhtml.xsl', 
 				'src_V_transpositionS_tei2xhtml.xsl', 
 				'src_V_additionS_tei2xhtml.xsl', 
 				'src_V_substitutionS_tei2xhtml.xsl', 
@@ -78,6 +91,8 @@
 				'refs_M_metamarkM_sourceS_tei2xhtml.xsl', 
 				'refs_M_anchorM_targetS_tei2xhtml.xsl', 
 				'refs_M_metamarkM_targetS_tei2xhtml.xsl', 
+				'refs_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl', 
+				'refs_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl', 
 				'refs_F_get-idS_tei2xhtml.xsl');
 
         
@@ -482,7 +497,7 @@
                                     </tr>
                                     <tr>
                                        <td class="paramName"><b>context</b></td>
-                                       <td>List of editorial interventions in which we must find a match for
+                                       <td>List of editorial interventions in which we should find a match for
                                           <a href=".html#" target="_self">target</a></td>
                                     </tr>
                                  </table>
@@ -579,6 +594,130 @@
             <td class="rt_lB"></td>
             <td class="rt_cBR"></td>
          </tr>
+      </table><a id="T_output-imageS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">output-image</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_output-imageS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_output-imageS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_output-imageS_tei2xhtml.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Named template to create the appropriate output of a <b>tei:pb</b> element.
+                                 It assumes that there won’t be any periods in the image file name so we can use it
+                                 to
+                                 get rid of the extension.
+                                 <table>
+                                    <tr>
+                                       <h4>Parameters</h4>
+                                       <td class="paramName"><b>context</b></td>
+                                       <td><b class="paramDesc">tei:pb</b> element being processed</td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_output-imageS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_output-imageS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_output-imageS_tei2xhtml.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')"><span class="mRf">pb[@corresp eq $source]</span><span class="mdRf">source</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')"><span class="mRf">pb[@corresp eq $target]</span><span class="mdRf">target</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_T_output-imageS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_T_output-imageS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_T_output-imageS_tei2xhtml.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                       <th>Type</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">context</td>
+                                    <td>No namespace</td>
+                                    <td>element()</td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_output-imageS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_output-imageS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_output-imageS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"output-image"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> as=</span><span class="tAV">"element()"</span><span class="tAN"> name=</span><span class="tAV">"context"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"page-marker"</span><span class="tAN"> data-image-name=</span><span class="tAV">"{substring-before($context/@facs, '.')}"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"page-number"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$context/@pagination"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;img</span><span class="tAN"> src=</span><span class="tAV">"/img/settings/{$context/@facs}"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
       </table><a id="M_S_tei2xhtml.xsl"></a><div class="cmpT">Template
          <span class="titleTemplateMatch">/</span></div>
       <table class="rt">
@@ -656,7 +795,7 @@
                                  <tr>
                                     <td width="100%">
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"/"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"withLineBreaks"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"item()+"</span><span class="tAN"> name=</span><span class="tAV">"withLineBreaks"</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> mode=</span><span class="tAV">"lb"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:result-document</span><span class="tAN"> href=</span><span class="tAV">"d.xhtml"</span><span class="tXSLEl">&gt;</span><span class="tI">
@@ -766,8 +905,8 @@
             <td class="rt_lB"></td>
             <td class="rt_cBR"></td>
          </tr>
-      </table><a id="T_pReplacementS_tei2xhtml.xsl"></a><div class="cmpT">Template
-         <span class="titleTemplateMatch">p</span><span class="titleTemplateName">pReplacement</span><span class="titleTemplateMode">lb</span></div>
+      </table><a id="M_pM_lbS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">p</span><span class="titleTemplateMode">lb</span></div>
       <table class="rt">
          <tr>
             <td class="rt_cTL"></td>
@@ -782,10 +921,10 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Documentation</div>
-                           <div class="flR"><input id="bt_dS_T_pReplacementS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_pReplacementS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_dS_M_pM_lbS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_pM_lbS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="dS_T_pReplacementS_tei2xhtml.xsl" style="display:block">
+                           <div id="dS_M_pM_lbS_tei2xhtml.xsl" style="display:block">
                               <div>
                                  <h3>Description</h3>Insertion of <b>tei:lb</b> elements for each paragraph.</div>
                            </div>
@@ -810,14 +949,14 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Source</div>
-                           <div class="flR"><input id="bt_src_T_pReplacementS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_pReplacementS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_src_M_pM_lbS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_pM_lbS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="src_T_pReplacementS_tei2xhtml.xsl" style="display:block">
+                           <div id="src_M_pM_lbS_tei2xhtml.xsl" style="display:block">
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"p"</span><span class="tAN"> mode=</span><span class="tAV">"lb"</span><span class="tAN"> name=</span><span class="tAV">"pReplacement"</span><span class="tXSLEl">&gt;</span><span class="tI">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"p"</span><span class="tAN"> mode=</span><span class="tAV">"lb"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"node()"</span><span class="tAN"> mode=</span><span class="tAV">"lb"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;lb</span><span class="tAN"> xmlns=</span><span class="tAV">"http://www.tei-c.org/ns/1.0"</span><span class="tEl">/&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
@@ -1194,12 +1333,12 @@
                                  <tr>
                                     <td width="100%">
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"substitution"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"anchor"</span><span class="tAN"> select=</span><span class="tAV">"current()/ancestor::TEI//metamark[@corresp eq current()/@corresp]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor($anchor)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"replacement"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()"</span><span class="tAN"> name=</span><span class="tAV">"anchor"</span><span class="tAN"> select=</span><span class="tAV">"current()/ancestor::TEI//metamark[@corresp eq current()/@corresp]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()?"</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor($anchor)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"item()+"</span><span class="tAN"> name=</span><span class="tAV">"replacement"</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"source"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"source"</span><span class="tAN"> as=</span><span class="tAV">"item()+"</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:sequence</span><span class="tAN"> select=</span><span class="tAV">"$anchor/following::node()[. &lt;&lt; $delimiter]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
   </span><span class="tEl">&lt;li</span><span class="tEl">&gt;</span><span class="tI">
@@ -1298,9 +1437,9 @@
                                  <tr>
                                     <td width="100%">
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"anchor"</span><span class="tAN"> mode=</span><span class="tAV">"source"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()?"</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"span_c sync sync-single"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#bc_{variance:generate-number(.)}"</span><span class="tAN"> id=</span><span class="tAV">"ac_{variance:generate-number(.)}"</span><span class="tEl">&gt;</span><span class="tI">
-    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tAN"> mode=</span><span class="tAV">"source"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
                                     </td>
@@ -1411,7 +1550,7 @@
                                  <tr>
                                     <td width="100%">
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"metamark"</span><span class="tAN"> mode=</span><span class="tAV">"source"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()?"</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'del'"</span><span class="tXSLEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"span_s"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> id=</span><span class="tAV">"as_{variance:get-id(./@target, $deletion)}"</span><span class="tEl">&gt;</span><span class="tI">
@@ -1424,12 +1563,12 @@
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'add'"</span><span class="tXSLEl">/&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'subst'"</span><span class="tXSLEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"sync sync-single span_r"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#br_{variance:get-id(./@target, $substitution)}"</span><span class="tAN"> id=</span><span class="tAV">"ar_{variance:get-id(./@target, $substitution)}"</span><span class="tEl">&gt;</span><span class="tI">
-        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tAN"> mode=</span><span class="tAV">"source"</span><span class="tXSLEl">/&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'trans'"</span><span class="tXSLEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"sync sync-single span_d"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#bd_{variance:get-id(./@target, $transposition)}"</span><span class="tAN"> id=</span><span class="tAV">"ad_{variance:get-id(./@target, $transposition)}"</span><span class="tEl">&gt;</span><span class="tI">
-        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tAN"> mode=</span><span class="tAV">"source"</span><span class="tXSLEl">/&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
@@ -1524,10 +1663,9 @@
                                  <tr>
                                     <td width="100%">
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"anchor"</span><span class="tAN"> mode=</span><span class="tAV">"target"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()?"</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"span_c sync sync-single"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#ac_{variance:generate-number(.)}"</span><span class="tAN"> id=</span><span class="tAV">"bc_{variance:generate-number(.)}"</span><span class="tEl">&gt;</span><span class="tI">
-    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tAN"> mode=</span><span class="tAV">"target"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
                                     </td>
@@ -1638,7 +1776,7 @@
                                  <tr>
                                     <td width="100%">
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"metamark"</span><span class="tAN"> mode=</span><span class="tAV">"target"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()?"</span><span class="tAN"> name=</span><span class="tAV">"delimiter"</span><span class="tAN"> select=</span><span class="tAV">"variance:retrieve-next-anchor(.)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'del'"</span><span class="tXSLEl">/&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'add'"</span><span class="tXSLEl">&gt;</span><span class="tI">
@@ -1659,7 +1797,7 @@
     </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'trans' and not(@corresp)"</span><span class="tXSLEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"sync sync-single span_d"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#ad_{variance:get-id(./@target, $transposition)}"</span><span class="tAN"> id=</span><span class="tAV">"bd_{variance:get-id(./@target, $transposition)}"</span><span class="tEl">&gt;</span><span class="tI">
-        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[. &lt;&lt; $delimiter]"</span><span class="tAN"> mode=</span><span class="tAV">"target"</span><span class="tXSLEl">/&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
@@ -1680,8 +1818,8 @@
             <td class="rt_lB"></td>
             <td class="rt_cBR"></td>
          </tr>
-      </table><a id="M_lbM_allS_tei2xhtml.xsl"></a><div class="cmpT">Template
-         <span class="titleTemplateMatch">lb</span><span class="titleTemplateMode">#all</span></div>
+      </table><a id="M_lbM_defaultsourcetargetS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">lb</span><span class="titleTemplateMode">#default source target</span></div>
       <table class="rt">
          <tr>
             <td class="rt_cTL"></td>
@@ -1696,12 +1834,13 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Documentation</div>
-                           <div class="flR"><input id="bt_dS_M_lbM_allS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_lbM_allS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_dS_M_lbM_defaultsourcetargetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_lbM_defaultsourcetargetS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="dS_M_lbM_allS_tei2xhtml.xsl" style="display:block">
+                           <div id="dS_M_lbM_defaultsourcetargetS_tei2xhtml.xsl" style="display:block">
                               <div>
-                                 <h3>Description</h3>Processing of <b>tei:lb</b> elements (likely generated by <a href="tei2xhtml0.html#T_pReplacementS_tei2xhtml.xsl" target="_self">pReplacement</a>).</div>
+                                 <h3>Description</h3>Processing of <b>tei:lb</b> elements (likely generated within the "lb"
+                                 mode).</div>
                            </div>
                         </td>
                      </tr>
@@ -1715,7 +1854,7 @@
                      </tr>
                      <tr>
                         <td class="fCol">Mode</td>
-                        <td>#all</td>
+                        <td>#default source target</td>
                      </tr>
                      <tr>
                         <td class="fCol">Import precedence</td>
@@ -1724,14 +1863,14 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Source</div>
-                           <div class="flR"><input id="bt_src_M_lbM_allS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_lbM_allS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_src_M_lbM_defaultsourcetargetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_lbM_defaultsourcetargetS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="src_M_lbM_allS_tei2xhtml.xsl" style="display:block">
+                           <div id="src_M_lbM_defaultsourcetargetS_tei2xhtml.xsl" style="display:block">
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"lb"</span><span class="tAN"> mode=</span><span class="tAV">"#all"</span><span class="tXSLEl">&gt;</span><span class="tI">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"lb"</span><span class="tAN"> mode=</span><span class="tAV">"#default source target"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;br</span><span class="tEl">/&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
                                     </td>
@@ -1750,8 +1889,8 @@
             <td class="rt_lB"></td>
             <td class="rt_cBR"></td>
          </tr>
-      </table><a id="M_emphM_allS_tei2xhtml.xsl"></a><div class="cmpT">Template
-         <span class="titleTemplateMatch">emph</span><span class="titleTemplateMode">#all</span></div>
+      </table><a id="M_emphM_defaultsourcetargetS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">emph</span><span class="titleTemplateMode">#default source target</span></div>
       <table class="rt">
          <tr>
             <td class="rt_cTL"></td>
@@ -1766,10 +1905,10 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Documentation</div>
-                           <div class="flR"><input id="bt_dS_M_emphM_allS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_emphM_allS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_dS_M_emphM_defaultsourcetargetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_emphM_defaultsourcetargetS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="dS_M_emphM_allS_tei2xhtml.xsl" style="display:block">
+                           <div id="dS_M_emphM_defaultsourcetargetS_tei2xhtml.xsl" style="display:block">
                               <div>
                                  <h3>Description</h3>Processing of <b>tei:emph</b> elements.</div>
                            </div>
@@ -1785,7 +1924,7 @@
                      </tr>
                      <tr>
                         <td class="fCol">Mode</td>
-                        <td>#all</td>
+                        <td>#default source target</td>
                      </tr>
                      <tr>
                         <td class="fCol">Import precedence</td>
@@ -1794,14 +1933,14 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Source</div>
-                           <div class="flR"><input id="bt_src_M_emphM_allS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_emphM_allS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_src_M_emphM_defaultsourcetargetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_emphM_defaultsourcetargetS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="src_M_emphM_allS_tei2xhtml.xsl" style="display:block">
+                           <div id="src_M_emphM_defaultsourcetargetS_tei2xhtml.xsl" style="display:block">
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"emph"</span><span class="tAN"> mode=</span><span class="tAV">"#all"</span><span class="tXSLEl">&gt;</span><span class="tI">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"emph"</span><span class="tAN"> mode=</span><span class="tAV">"#default source target"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;em</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/em&gt;</span><span class="tI">
@@ -1822,8 +1961,8 @@
             <td class="rt_lB"></td>
             <td class="rt_cBR"></td>
          </tr>
-      </table><a id="M_pbS_tei2xhtml.xsl"></a><div class="cmpT">Template
-         <span class="titleTemplateMatch">pb</span></div>
+      </table><a id="M_textparentemphM_sourcetargetS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">text()[parent::emph]</span><span class="titleTemplateMode">source target</span></div>
       <table class="rt">
          <tr>
             <td class="rt_cTL"></td>
@@ -1838,14 +1977,13 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Documentation</div>
-                           <div class="flR"><input id="bt_dS_M_pbS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_pbS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_dS_M_textparentemphM_sourcetargetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_textparentemphM_sourcetargetS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="dS_M_pbS_tei2xhtml.xsl" style="display:block">
+                           <div id="dS_M_textparentemphM_sourcetargetS_tei2xhtml.xsl" style="display:block">
                               <div>
-                                 <h3>Description</h3>Processing of <b>tei:pb</b> elements to create images. It assumes that there
-                                 won’t be any periods in the image file name so we can use it to get rid of the
-                                 extension.</div>
+                                 <h3>Description</h3>Omit processing of text nodes inside tei:emph because of having to rely on the
+                                 <b>following</b> axis.</div>
                            </div>
                         </td>
                      </tr>
@@ -1855,11 +1993,11 @@
                      </tr>
                      <tr>
                         <td class="fCol">Match</td>
-                        <td>pb</td>
+                        <td>text()[parent::emph]</td>
                      </tr>
                      <tr>
                         <td class="fCol">Mode</td>
-                        <td>#default</td>
+                        <td>source target</td>
                      </tr>
                      <tr>
                         <td class="fCol">Import precedence</td>
@@ -1868,21 +2006,372 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Source</div>
-                           <div class="flR"><input id="bt_src_M_pbS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_pbS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_src_M_textparentemphM_sourcetargetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_textparentemphM_sourcetargetS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="src_M_pbS_tei2xhtml.xsl" style="display:block">
+                           <div id="src_M_textparentemphM_sourcetargetS_tei2xhtml.xsl" style="display:block">
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"pb"</span><span class="tXSLEl">&gt;</span><span class="tI">
-  </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"page-marker"</span><span class="tAN"> data-image-name=</span><span class="tAV">"{substring-before(@facs, '.')}"</span><span class="tEl">&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"page-number"</span><span class="tEl">&gt;</span><span class="tI">
-      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"@pagination"</span><span class="tXSLEl">/&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;img</span><span class="tAN"> src=</span><span class="tAV">"/img/settings/{@facs}"</span><span class="tEl">/&gt;</span><span class="tI">
-  </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"text()[parent::emph]"</span><span class="tAN"> mode=</span><span class="tAV">"source target"</span><span class="tXSLEl">/&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">pb[@corresp eq $source]</span><span class="titleTemplateMode">source</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Processing of <b>tei:pb</b> elements to display an image in the source
+                                 file.</div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>pb[@corresp eq $source]</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>source</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#V_sourceS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')">source</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#T_output-imageS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')"><span class="nRf">output-image</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"pb[@corresp eq $source]"</span><span class="tAN"> mode=</span><span class="tAV">"source"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"output-image"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"context"</span><span class="tAN"> select=</span><span class="tAV">"."</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">pb[@corresp eq $target]</span><span class="titleTemplateMode">target</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Processing of <b>tei:pb</b> elements to display an image in the target
+                                 file.</div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>pb[@corresp eq $target]</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>target</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#V_targetS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')">target</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#T_output-imageS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')"><span class="nRf">output-image</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"pb[@corresp eq $target]"</span><span class="tAN"> mode=</span><span class="tAV">"target"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"output-image"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"context"</span><span class="tAN"> select=</span><span class="tAV">"."</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_sourceS_tei2xhtml.xsl"></a><div class="cmpT">Variable
+         <span class="qname">source</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_V_sourceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_V_sourceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_V_sourceS_tei2xhtml.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Global variables that hold the source and target IDs for convenience.</div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>//informations/@vsource</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Type</td>
+                        <td>xs:string</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_V_sourceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_sourceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_V_sourceS_tei2xhtml.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#M_pbcorrespeqsourceM_sourceS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')"><span class="mRf">pb[@corresp eq $source]</span><span class="mdRf">source</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_sourceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_sourceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_sourceS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"xs:string"</span><span class="tAN"> name=</span><span class="tAV">"source"</span><span class="tAN"> select=</span><span class="tAV">"//informations/@vsource"</span><span class="tXSLEl">/&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_targetS_tei2xhtml.xsl"></a><div class="cmpT">Variable
+         <span class="qname">target</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>//informations/@vcible</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Type</td>
+                        <td>xs:string</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_V_targetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_targetS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_V_targetS_tei2xhtml.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#M_pbcorrespeqtargetM_targetS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')"><span class="mRf">pb[@corresp eq $target]</span><span class="mdRf">target</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_targetS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_targetS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_targetS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"xs:string"</span><span class="tAN"> name=</span><span class="tAV">"target"</span><span class="tAN"> select=</span><span class="tAV">"//informations/@vcible"</span><span class="tXSLEl">/&gt;</span></pre>
                                     </td>
                                  </tr>
                               </table>
@@ -1920,8 +2409,8 @@
                         <td>
                            <div id="dS_V_transpositionS_tei2xhtml.xsl" style="display:block">
                               <div>
-                                 <h3>Description</h3>Global variables that hold de lists of transformation for convenience and to
-                                 increase performance.</div>
+                                 <h3>Description</h3>Global variables that hold de lists of transformations for convenience and
+                                 increased performance.</div>
                            </div>
                         </td>
                      </tr>
@@ -1932,6 +2421,10 @@
                      <tr>
                         <td class="fCol">Select</td>
                         <td>//listTranspose</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Type</td>
+                        <td>element()</td>
                      </tr>
                      <tr>
                         <td class="fCol">
@@ -1965,7 +2458,7 @@
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"transposition"</span><span class="tAN"> select=</span><span class="tAV">"//listTranspose"</span><span class="tXSLEl">/&gt;</span></pre>
+                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()"</span><span class="tAN"> name=</span><span class="tAV">"transposition"</span><span class="tAN"> select=</span><span class="tAV">"//listTranspose"</span><span class="tXSLEl">/&gt;</span></pre>
                                     </td>
                                  </tr>
                               </table>
@@ -2004,6 +2497,10 @@
                         <td>//listAddition</td>
                      </tr>
                      <tr>
+                        <td class="fCol">Type</td>
+                        <td>element()</td>
+                     </tr>
+                     <tr>
                         <td class="fCol">
                            <div class="flL">Used by</div>
                            <div class="flR"><input id="bt_uB_V_additionS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_additionS_tei2xhtml.xsl');" class="control" /></div>
@@ -2034,7 +2531,7 @@
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"addition"</span><span class="tAN"> select=</span><span class="tAV">"//listAddition"</span><span class="tXSLEl">/&gt;</span></pre>
+                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()"</span><span class="tAN"> name=</span><span class="tAV">"addition"</span><span class="tAN"> select=</span><span class="tAV">"//listAddition"</span><span class="tXSLEl">/&gt;</span></pre>
                                     </td>
                                  </tr>
                               </table>
@@ -2073,6 +2570,10 @@
                         <td>//listSubstitution</td>
                      </tr>
                      <tr>
+                        <td class="fCol">Type</td>
+                        <td>element()</td>
+                     </tr>
+                     <tr>
                         <td class="fCol">
                            <div class="flL">Used by</div>
                            <div class="flR"><input id="bt_uB_V_substitutionS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_substitutionS_tei2xhtml.xsl');" class="control" /></div>
@@ -2104,7 +2605,7 @@
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"substitution"</span><span class="tAN"> select=</span><span class="tAV">"//listSubstitution"</span><span class="tXSLEl">/&gt;</span></pre>
+                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()"</span><span class="tAN"> name=</span><span class="tAV">"substitution"</span><span class="tAN"> select=</span><span class="tAV">"//listSubstitution"</span><span class="tXSLEl">/&gt;</span></pre>
                                     </td>
                                  </tr>
                               </table>
@@ -2143,6 +2644,10 @@
                         <td>//listDeletion</td>
                      </tr>
                      <tr>
+                        <td class="fCol">Type</td>
+                        <td>element()</td>
+                     </tr>
+                     <tr>
                         <td class="fCol">
                            <div class="flL">Used by</div>
                            <div class="flR"><input id="bt_uB_V_deletionS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_deletionS_tei2xhtml.xsl');" class="control" /></div>
@@ -2173,7 +2678,7 @@
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"deletion"</span><span class="tAN"> select=</span><span class="tAV">"//listDeletion"</span><span class="tXSLEl">/&gt;</span></pre>
+                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()"</span><span class="tAN"> name=</span><span class="tAV">"deletion"</span><span class="tAN"> select=</span><span class="tAV">"//listDeletion"</span><span class="tXSLEl">/&gt;</span></pre>
                                     </td>
                                  </tr>
                               </table>
@@ -2356,7 +2861,7 @@
                                     </tr>
                                     <tr>
                                        <td class="paramName"><b>context</b></td>
-                                       <td>List of editorial interventions in which we must find a match for
+                                       <td>List of editorial interventions in which we should find a match for
                                           <a href=".html#" target="_self">target</a></td>
                                     </tr>
                                  </table>
