@@ -11,8 +11,10 @@ XSLT transformation to convert a TEI file with the results of the comparison int
 
 ## How to run
 
+The script has been tested with both Saxon 11 and 12.
+
 ```
-java -jar lib/saxon.jar -s:SOURCE_FILE_OR DIR -xsl:tei2xhtml.xsl -o:OUTPUT
+java -jar lib/SaxonHE12-5J/saxon-he-12.5.jar -s:SOURCE_FILE_OR DIR -xsl:tei2xhtml.xsl -o:OUTPUT
 ```
 
 ## Documentation
