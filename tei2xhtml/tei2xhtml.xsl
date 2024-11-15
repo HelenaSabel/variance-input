@@ -11,6 +11,8 @@
                 algorithm and it returns 6 XHMTL fragmented files: list of replacements, list of
                 additions, list of deletions, list of transpositions, reading view of the source
                 text, reading view of the target text.</xd:p>
+            <xd:p>Some conventions: for operations that return a string or a source node, we use
+                functionns, for output nodes, named templates.</xd:p>
         </xd:desc>
     </xd:doc>
 
@@ -83,13 +85,35 @@
     </xsl:template>
 
     <xd:doc>
+        <xd:desc>Named template to create the appropriate output of a <xd:b>tei:pb</xd:b> element.
+            It assumes that there won’t be any periods in the image file name so we can use it to
+            get rid of the extension.</xd:desc>
+        <xd:param name="context"><xd:b>tei:pb</xd:b> element being processed</xd:param>
+    </xd:doc>
+    <xsl:template name="output-image">
+        <xsl:param as="element()" name="context"/>
+        <span class="page-marker" data-image-name="{substring-before($context/@facs, '.')}">
+            <span class="page-number">
+                <xsl:value-of select="$context/@pagination"/>
+            </span>
+            <img src="/img/settings/{$context/@facs}"/>
+        </span>
+    </xsl:template>
+
+    <xd:doc>
+        <xd:desc>Global variables that hold the source and target IDs for convenience.</xd:desc>
+    </xd:doc>
+    <xsl:variable as="xs:string" name="source" select="//informations/@vsource"/>
+    <xsl:variable as="xs:string" name="target" select="//informations/@vcible"/>
+
+    <xd:doc>
         <xd:desc>Global variables that hold de lists of transformations for convenience and
             increased performance.</xd:desc>
     </xd:doc>
-    <xsl:variable name="transposition" select="//listTranspose"/>
-    <xsl:variable name="addition" select="//listAddition"/>
-    <xsl:variable name="substitution" select="//listSubstitution"/>
-    <xsl:variable name="deletion" select="//listDeletion"/>
+    <xsl:variable as="element()" name="transposition" select="//listTranspose"/>
+    <xsl:variable as="element()" name="addition" select="//listAddition"/>
+    <xsl:variable as="element()" name="substitution" select="//listSubstitution"/>
+    <xsl:variable as="element()" name="deletion" select="//listDeletion"/>
 
     <xd:doc>
         <xd:desc>Main template from which we genetare the 6 XHTML files using multimodal
@@ -98,7 +122,7 @@
             instead line breaks.</xd:desc>
     </xd:doc>
     <xsl:template match="/">
-        <xsl:variable name="withLineBreaks">
+        <xsl:variable as="item()+" name="withLineBreaks">
             <xsl:apply-templates mode="lb"/>
         </xsl:variable>
         <xsl:result-document href="d.xhtml">
@@ -137,7 +161,7 @@
     <xd:doc>
         <xd:desc>Insertion of <xd:b>tei:lb</xd:b> elements for each paragraph.</xd:desc>
     </xd:doc>
-    <xsl:template match="p" mode="lb" name="pReplacement">
+    <xsl:template match="p" mode="lb">
         <xsl:apply-templates select="node()" mode="lb"/>
         <lb xmlns="http://www.tei-c.org/ns/1.0"/>
     </xsl:template>
@@ -184,13 +208,14 @@
             <xd:i>r.xhtml</xd:i>.</xd:desc>
     </xd:doc>
     <xsl:template match="substitution">
-        <xsl:variable name="anchor"
+        <xsl:variable as="element()" name="anchor"
             select="current()/ancestor::TEI//metamark[@corresp eq current()/@corresp]"/>
-        <xsl:variable name="delimiter" select="variance:retrieve-next-anchor($anchor)"/>
-        <xsl:variable name="replacement">
+        <xsl:variable as="element()?" name="delimiter"
+            select="variance:retrieve-next-anchor($anchor)"/>
+        <xsl:variable as="item()+" name="replacement">
             <xsl:apply-templates/>
         </xsl:variable>
-        <xsl:variable name="source">
+        <xsl:variable name="source" as="item()+">
             <xsl:sequence select="$anchor/following::node()[. &lt;&lt; $delimiter]"/>
         </xsl:variable>
         <li>
@@ -206,10 +231,10 @@
             view.</xd:desc>
     </xd:doc>
     <xsl:template match="anchor" mode="source">
-        <xsl:variable name="delimiter" select="variance:retrieve-next-anchor(.)"/>
+        <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <a class="span_c sync sync-single" data-tags="" href="#bc_{variance:generate-number(.)}"
             id="ac_{variance:generate-number(.)}">
-            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"/>
+            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]" mode="source"/>
         </a>
     </xsl:template>
 
@@ -218,7 +243,7 @@
             view.</xd:desc>
     </xd:doc>
     <xsl:template match="metamark" mode="source">
-        <xsl:variable name="delimiter" select="variance:retrieve-next-anchor(.)"/>
+        <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <xsl:choose>
             <xsl:when test="@function eq 'del'">
                 <span class="span_s" data-tags="" id="as_{variance:get-id(./@target, $deletion)}">
@@ -233,14 +258,16 @@
                 <a class="sync sync-single span_r" data-tags=""
                     href="#br_{variance:get-id(./@target, $substitution)}"
                     id="ar_{variance:get-id(./@target, $substitution)}">
-                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"/>
+                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                        mode="#current"/>
                 </a>
             </xsl:when>
             <xsl:when test="@function eq 'trans'">
                 <a class="sync sync-single span_d" data-tags=""
                     href="#bd_{variance:get-id(./@target, $transposition)}"
                     id="ad_{variance:get-id(./@target, $transposition)}">
-                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"/>
+                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                        mode="#current"/>
                 </a>
             </xsl:when>
         </xsl:choose>
@@ -251,10 +278,10 @@
             view.</xd:desc>
     </xd:doc>
     <xsl:template match="anchor" mode="target">
-        <xsl:variable name="delimiter" select="variance:retrieve-next-anchor(.)"> </xsl:variable>
+        <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <a class="span_c sync sync-single" data-tags="" href="#ac_{variance:generate-number(.)}"
             id="bc_{variance:generate-number(.)}">
-            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"/>
+            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]" mode="#current"/>
         </a>
     </xsl:template>
 
@@ -263,7 +290,7 @@
             view.</xd:desc>
     </xd:doc>
     <xsl:template match="metamark" mode="target">
-        <xsl:variable name="delimiter" select="variance:retrieve-next-anchor(.)"/>
+        <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <xsl:choose>
             <xsl:when test="@function eq 'del'"/>
             <xsl:when test="@function eq 'add'">
@@ -288,37 +315,52 @@
                 <a class="sync sync-single span_d" data-tags=""
                     href="#ad_{variance:get-id(./@target, $transposition)}"
                     id="bd_{variance:get-id(./@target, $transposition)}">
-                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"/>
+                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                        mode="#current"/>
                 </a>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
 
     <xd:doc>
-        <xd:desc>Processing of <xd:b>tei:lb</xd:b> elements (likely generated by <xd:ref
-                name="pReplacement" type="template"/>).</xd:desc>
+        <xd:desc>Processing of <xd:b>tei:lb</xd:b> elements (likely generated within the "lb"
+            mode).</xd:desc>
     </xd:doc>
-    <xsl:template match="lb" mode="#all">
+    <xsl:template match="lb" mode="#default source target">
         <br/>
     </xsl:template>
     <xd:doc>
         <xd:desc>Processing of <xd:b>tei:emph</xd:b> elements.</xd:desc>
     </xd:doc>
-    <xsl:template match="emph" mode="#all">
+    <xsl:template match="emph" mode="#default source target">
         <em>
-            <xsl:apply-templates/>
+            <xsl:apply-templates mode="#current"/>
         </em>
     </xsl:template>
 
     <xd:doc>
-        <xd:desc>Processing of <xd:b>tei:pb</xd:b> elements to create images. It assumes that there
-            won’t be any periods in the image file name so we can use it to get rid of the
-            extension.</xd:desc>
+        <xd:desc>Omit processing of text nodes inside tei:emph because of having to rely on the
+                <xd:b>following</xd:b> axis.</xd:desc>
     </xd:doc>
-    <xsl:template match="pb">
-        <span class="page-marker" data-image-name="{substring-before(@facs, '.')}">
-            <span class="page-number"><xsl:value-of select="@pagination"/></span>
-            <img src="/img/settings/{@facs}"/>
-        </span>
+    <xsl:template match="text()[parent::emph]" mode="source target"/>
+
+    <xd:doc>
+        <xd:desc>Processing of <xd:b>tei:pb</xd:b> elements to display an image in the source
+            file.</xd:desc>
+    </xd:doc>
+    <xsl:template match="pb[@corresp eq $source]" mode="source">
+        <xsl:call-template name="output-image">
+            <xsl:with-param name="context" select="."/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xd:doc>
+        <xd:desc>Processing of <xd:b>tei:pb</xd:b> elements to display an image in the target
+            file.</xd:desc>
+    </xd:doc>
+    <xsl:template match="pb[@corresp eq $target]" mode="target">
+        <xsl:call-template name="output-image">
+            <xsl:with-param name="context" select="."/>
+        </xsl:call-template>
     </xsl:template>
 </xsl:stylesheet>
