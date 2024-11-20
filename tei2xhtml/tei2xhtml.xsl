@@ -119,15 +119,14 @@
         <xd:desc>Main template from which we genetare the 6 XHTML files using multimodal
             instructions. Note that there is a first transformation pass done via <xd:ref
                 name="withLineBreaks" type="variable"/> (mode "lb") to get rid of paragraphs and add
-            instead line breaks, and a equivalent one in which the paragraphs get transformed into pilcrows <xd:ref
-                name="withPilcrows" type="variable"/></xd:desc>
+            instead line breaks. To create the list of substitutions, in which the content of the
+            source text needs to be extracted from the source file, we create pass a param that
+            contains a version of the source file in which paragraphs get transformed into
+            pilcrows <xd:ref name="withPilcrows" type="variable"/></xd:desc>
     </xd:doc>
     <xsl:template match="/">
         <xsl:variable as="item()+" name="withLineBreaks">
             <xsl:apply-templates mode="lb"/>
-        </xsl:variable>
-        <xsl:variable as="item()+" name="withPilcrows">
-            <xsl:apply-templates mode="pilcrow"/>
         </xsl:variable>
         <xsl:result-document href="d.xhtml">
             <xsl:apply-templates select="$transposition"/>
@@ -137,7 +136,9 @@
         </xsl:result-document>
         <xsl:result-document href="r.xhtml">
             <xsl:apply-templates select="$substitution">
-                <xsl:with-param name="withPilcrows" select="$withPilcrows"/>
+                <xsl:with-param name="withPilcrows">
+                    <xsl:apply-templates mode="pilcrow"/>
+                </xsl:with-param>
             </xsl:apply-templates>
         </xsl:result-document>
         <xsl:result-document href="s.xhtml">
@@ -171,12 +172,13 @@
         <xsl:apply-templates select="node()" mode="lb"/>
         <lb xmlns="http://www.tei-c.org/ns/1.0"/>
     </xsl:template>
-    
+
     <xd:doc>
         <xd:desc>Insertion of pilcrows for each paragraph.</xd:desc>
     </xd:doc>
     <xsl:template match="p" mode="pilcrow">
-        <xsl:apply-templates select="node()" mode="pilcrow"/><xsl:text> ¶ </xsl:text>
+        <xsl:apply-templates select="node()" mode="pilcrow"/>
+        <xsl:text> ¶ </xsl:text>
     </xsl:template>
 
     <xd:doc>
@@ -252,7 +254,7 @@
         <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <a class="span_c sync sync-single" data-tags="" href="#bc_{variance:generate-number(.)}"
             id="ac_{variance:generate-number(.)}">
-            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]" mode="source"/>
+            <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]" mode="source"/>
         </a>
     </xsl:template>
 
@@ -265,7 +267,7 @@
         <xsl:choose>
             <xsl:when test="@function eq 'del'">
                 <span class="span_s" data-tags="" id="as_{variance:get-id(./@target, $deletion)}">
-                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </span>
             </xsl:when>
@@ -274,7 +276,7 @@
                 <a class="sync sync-single span_r" data-tags=""
                     href="#br_{variance:get-id(./@target, $substitution)}"
                     id="ar_{variance:get-id(./@target, $substitution)}">
-                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </a>
             </xsl:when>
@@ -282,7 +284,7 @@
                 <a class="sync sync-single span_d" data-tags=""
                     href="#bd_{variance:get-id(./@target, $transposition)}"
                     id="ad_{variance:get-id(./@target, $transposition)}">
-                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </a>
             </xsl:when>
@@ -297,7 +299,7 @@
         <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <a class="span_c sync sync-single" data-tags="" href="#ac_{variance:generate-number(.)}"
             id="bc_{variance:generate-number(.)}">
-            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]" mode="#current"
+            <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]" mode="#current"
             />
         </a>
     </xsl:template>
@@ -332,7 +334,7 @@
                 <a class="sync sync-single span_d" data-tags=""
                     href="#ad_{variance:get-id(./@target, $transposition)}"
                     id="bd_{variance:get-id(./@target, $transposition)}">
-                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </a>
             </xsl:when>
