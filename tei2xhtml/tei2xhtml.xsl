@@ -80,7 +80,7 @@
     </xd:doc>
     <xsl:template as="item()*" name="get-contents">
         <xsl:param as="xs:string?" name="target"/>
-        <xsl:param as="node()?" name="context"/>
+        <xsl:param as="node()?" name="context"/>        
         <xsl:apply-templates select="$context/*[@corresp eq $target]/node()"/>
     </xsl:template>
 
@@ -233,7 +233,7 @@
         <xsl:variable as="item()+" name="replacement">
             <xsl:apply-templates/>
         </xsl:variable>
-        <xsl:variable name="source" as="item()*">
+        <xsl:variable name="source" as="item()+">
             <xsl:apply-templates
                 select="$anchor/following::node()[not(parent::emph[. ne $anchor/parent::*])][. &lt;&lt; $delimiter]"
             />
@@ -325,7 +325,7 @@
                     href="#ar_{variance:get-id(./@target, $substitution)}"
                     id="br_{variance:get-id(./@target, $substitution)}">
                     <xsl:call-template name="get-contents">
-                        <xsl:with-param name="target" select="@target"/>
+                        <xsl:with-param name="target" select="@corresp"/>
                         <xsl:with-param name="context" select="$substitution"/>
                     </xsl:call-template>
                 </a>
