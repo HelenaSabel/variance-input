@@ -247,10 +247,12 @@
         <xsl:choose>
             <xsl:when test="@function eq 'del'">
                 <span class="span_s" data-tags="" id="as_{variance:get-id(./@target, $deletion)}">
-                    <xsl:call-template name="get-contents">
+                    <!--<xsl:call-template name="get-contents">
                         <xsl:with-param name="context" select="$deletion"/>
                         <xsl:with-param name="target" select="./@target"/>
-                    </xsl:call-template>
+                    </xsl:call-template>-->
+                    <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
+                        mode="#current"/>
                 </span>
             </xsl:when>
             <xsl:when test="@function eq 'add'"/>
