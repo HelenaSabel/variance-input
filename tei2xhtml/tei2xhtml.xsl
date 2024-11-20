@@ -81,7 +81,7 @@
     <xsl:template as="item()*" name="get-contents">
         <xsl:param as="xs:string?" name="target"/>
         <xsl:param as="node()?" name="context"/>        
-        <xsl:apply-templates select="$context/*[@corresp eq $target]/node()"/>
+        <xsl:apply-templates select="$context/*[(@target|@corresp) = $target]/node()"/>
     </xsl:template>
 
     <xd:doc>
@@ -325,7 +325,7 @@
                     href="#ar_{variance:get-id(./@target, $substitution)}"
                     id="br_{variance:get-id(./@target, $substitution)}">
                     <xsl:call-template name="get-contents">
-                        <xsl:with-param name="target" select="@corresp"/>
+                        <xsl:with-param name="target" select="@target"/>
                         <xsl:with-param name="context" select="$substitution"/>
                     </xsl:call-template>
                 </a>
@@ -334,8 +334,10 @@
                 <a class="sync sync-single span_d" data-tags=""
                     href="#ad_{variance:get-id(./@target, $transposition)}"
                     id="bd_{variance:get-id(./@target, $transposition)}">
-                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
-                        mode="#current"/>
+                    <xsl:call-template name="get-contents">
+                        <xsl:with-param name="target" select="@target"/>
+                        <xsl:with-param name="context" select="$transposition"/>
+                    </xsl:call-template>
                 </a>
             </xsl:when>
         </xsl:choose>
