@@ -119,11 +119,15 @@
         <xd:desc>Main template from which we genetare the 6 XHTML files using multimodal
             instructions. Note that there is a first transformation pass done via <xd:ref
                 name="withLineBreaks" type="variable"/> (mode "lb") to get rid of paragraphs and add
-            instead line breaks.</xd:desc>
+            instead line breaks, and a equivalent one in which the paragraphs get transformed into pilcrows <xd:ref
+                name="withPilcrows" type="variable"/></xd:desc>
     </xd:doc>
     <xsl:template match="/">
         <xsl:variable as="item()+" name="withLineBreaks">
             <xsl:apply-templates mode="lb"/>
+        </xsl:variable>
+        <xsl:variable as="item()+" name="withPilcrows">
+            <xsl:apply-templates mode="pilcrow"/>
         </xsl:variable>
         <xsl:result-document href="d.xhtml">
             <xsl:apply-templates select="$transposition"/>
@@ -132,7 +136,9 @@
             <xsl:apply-templates select="$addition"/>
         </xsl:result-document>
         <xsl:result-document href="r.xhtml">
-            <xsl:apply-templates select="$substitution"/>
+            <xsl:apply-templates select="$substitution">
+                <xsl:with-param name="withPilcrows" select="$withPilcrows"/>
+            </xsl:apply-templates>
         </xsl:result-document>
         <xsl:result-document href="s.xhtml">
             <xsl:apply-templates select="$deletion"/>
@@ -150,11 +156,11 @@
     </xsl:template>
 
     <xd:doc>
-        <xd:desc>Identity transformation for the "lb" mode pass.</xd:desc>
+        <xd:desc>Identity transformation for the "lb" and “pilcrow” modes passes.</xd:desc>
     </xd:doc>
-    <xsl:template match="node() | @*" mode="lb">
+    <xsl:template match="node() | @*" mode="lb pilcrow">
         <xsl:copy>
-            <xsl:apply-templates select="node() | @*" mode="lb"/>
+            <xsl:apply-templates select="node() | @*" mode="#current"/>
         </xsl:copy>
     </xsl:template>
 
@@ -164,6 +170,13 @@
     <xsl:template match="p" mode="lb">
         <xsl:apply-templates select="node()" mode="lb"/>
         <lb xmlns="http://www.tei-c.org/ns/1.0"/>
+    </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Insertion of pilcrows for each paragraph.</xd:desc>
+    </xd:doc>
+    <xsl:template match="p" mode="pilcrow">
+        <xsl:apply-templates select="node()" mode="pilcrow"/><xsl:text> ¶ </xsl:text>
     </xsl:template>
 
     <xd:doc>
@@ -206,17 +219,22 @@
     <xd:doc>
         <xd:desc>Template to create list of replacements for document
             <xd:i>r.xhtml</xd:i>.</xd:desc>
+        <xd:param name="withPilcrows">Version of the source file with paragraphs transformed into
+            pilcrows</xd:param>
     </xd:doc>
     <xsl:template match="substitution">
+        <xsl:param name="withPilcrows"/>
         <xsl:variable as="element()" name="anchor"
-            select="current()/ancestor::TEI//metamark[@corresp eq current()/@corresp]"/>
+            select="$withPilcrows//metamark[@corresp eq current()/@corresp]"/>
         <xsl:variable as="element()?" name="delimiter"
             select="variance:retrieve-next-anchor($anchor)"/>
         <xsl:variable as="item()+" name="replacement">
             <xsl:apply-templates/>
         </xsl:variable>
-        <xsl:variable name="source" as="item()+">
-            <xsl:sequence select="$anchor/following::node()[. &lt;&lt; $delimiter]"/>
+        <xsl:variable name="source" as="item()*">
+            <xsl:apply-templates
+                select="$anchor/following::node()[not(parent::emph[. ne $anchor/parent::*])][. &lt;&lt; $delimiter]"
+            />
         </xsl:variable>
         <li>
             <a class="sync sync-twice" data-tags="" href="#ar_{variance:generate-number(.)}"
@@ -247,10 +265,6 @@
         <xsl:choose>
             <xsl:when test="@function eq 'del'">
                 <span class="span_s" data-tags="" id="as_{variance:get-id(./@target, $deletion)}">
-                    <!--<xsl:call-template name="get-contents">
-                        <xsl:with-param name="context" select="$deletion"/>
-                        <xsl:with-param name="target" select="./@target"/>
-                    </xsl:call-template>-->
                     <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </span>
@@ -283,7 +297,8 @@
         <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <a class="span_c sync sync-single" data-tags="" href="#ac_{variance:generate-number(.)}"
             id="bc_{variance:generate-number(.)}">
-            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]" mode="#current"/>
+            <xsl:apply-templates select="./following::node()[. &lt;&lt; $delimiter]" mode="#current"
+            />
         </a>
     </xsl:template>
 
@@ -331,6 +346,7 @@
     <xsl:template match="lb" mode="#default source target">
         <br/>
     </xsl:template>
+
     <xd:doc>
         <xd:desc>Processing of <xd:b>tei:emph</xd:b> elements.</xd:desc>
     </xd:doc>
@@ -339,12 +355,6 @@
             <xsl:apply-templates mode="#current"/>
         </em>
     </xsl:template>
-
-    <xd:doc>
-        <xd:desc>Omit processing of text nodes inside tei:emph because of having to rely on the
-                <xd:b>following</xd:b> axis.</xd:desc>
-    </xd:doc>
-    <xsl:template match="text()[parent::emph]" mode="source target"/>
 
     <xd:doc>
         <xd:desc>Processing of <xd:b>tei:pb</xd:b> elements to display an image in the source
