@@ -120,9 +120,9 @@
             instructions. Note that there is a first transformation pass done via <xd:ref
                 name="withLineBreaks" type="variable"/> (mode "lb") to get rid of paragraphs and add
             instead line breaks. To create the list of substitutions, in which the content of the
-            source text needs to be extracted from the source file, we create pass a param that
+            source text needs to be extracted from the source file, we create a param that
             contains a version of the source file in which paragraphs get transformed into
-            pilcrows <xd:ref name="withPilcrows" type="variable"/></xd:desc>
+            pilcrows <xd:ref name="withPilcrows" type="param"/></xd:desc>
     </xd:doc>
     <xsl:template match="/">
         <xsl:variable as="item()+" name="withLineBreaks">
