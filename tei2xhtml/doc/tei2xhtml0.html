@@ -30,13 +30,15 @@
 				'dS_T_get-contentsS_tei2xhtml.xsl', 
 				'dS_T_output-imageS_tei2xhtml.xsl', 
 				'dS_M_S_tei2xhtml.xsl', 
-				'dS_M_nodeM_lbpilcrowS_tei2xhtml.xsl', 
+				'dS_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl', 
 				'dS_M_pM_lbS_tei2xhtml.xsl', 
 				'dS_M_pM_pilcrowS_tei2xhtml.xsl', 
 				'dS_M_transposeS_tei2xhtml.xsl', 
 				'dS_M_deletionS_tei2xhtml.xsl', 
 				'dS_M_additionS_tei2xhtml.xsl', 
+				'dS_M_listSubstitutionS_tei2xhtml.xsl', 
 				'dS_M_substitutionS_tei2xhtml.xsl', 
+				'dS_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl', 
 				'dS_M_anchorM_sourceS_tei2xhtml.xsl', 
 				'dS_M_metamarkM_sourceS_tei2xhtml.xsl', 
 				'dS_M_anchorM_targetS_tei2xhtml.xsl', 
@@ -55,13 +57,15 @@
         var sourceBoxes= new Array('src_T_get-contentsS_tei2xhtml.xsl', 
 				'src_T_output-imageS_tei2xhtml.xsl', 
 				'src_M_S_tei2xhtml.xsl', 
-				'src_M_nodeM_lbpilcrowS_tei2xhtml.xsl', 
+				'src_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl', 
 				'src_M_pM_lbS_tei2xhtml.xsl', 
 				'src_M_pM_pilcrowS_tei2xhtml.xsl', 
 				'src_M_transposeS_tei2xhtml.xsl', 
 				'src_M_deletionS_tei2xhtml.xsl', 
 				'src_M_additionS_tei2xhtml.xsl', 
+				'src_M_listSubstitutionS_tei2xhtml.xsl', 
 				'src_M_substitutionS_tei2xhtml.xsl', 
+				'src_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl', 
 				'src_M_anchorM_sourceS_tei2xhtml.xsl', 
 				'src_M_metamarkM_sourceS_tei2xhtml.xsl', 
 				'src_M_anchorM_targetS_tei2xhtml.xsl', 
@@ -579,7 +583,7 @@
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> as=</span><span class="tAV">"item()*"</span><span class="tAN"> name=</span><span class="tAV">"get-contents"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> as=</span><span class="tAV">"xs:string?"</span><span class="tAN"> name=</span><span class="tAV">"target"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> as=</span><span class="tAV">"node()?"</span><span class="tAN"> name=</span><span class="tAV">"context"</span><span class="tXSLEl">/&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$context/*[(@target|@corresp) = $target]/node()"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$context/*[(@target | @corresp) = $target]/node()"</span><span class="tXSLEl">/&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
                                     </td>
                                  </tr>
@@ -744,11 +748,7 @@
                               <div>
                                  <h3>Description</h3>Main template from which we genetare the 6 XHTML files using multimodal
                                  instructions. Note that there is a first transformation pass done via <a href=".html#" target="_self">withLineBreaks</a> (mode "lb") to get rid of paragraphs and add
-                                 instead line breaks. To create the list of substitutions, in which the content of
-                                 the
-                                 source text needs to be extracted from the source file, we create a param that
-                                 contains a version of the source file in which paragraphs get transformed into
-                                 pilcrows <a href=".html#" target="_self">withPilcrows</a></div>
+                                 instead line breaks.</div>
                            </div>
                         </td>
                      </tr>
@@ -812,11 +812,7 @@
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$addition"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:result-document&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:result-document</span><span class="tAN"> href=</span><span class="tAV">"r.xhtml"</span><span class="tXSLEl">&gt;</span><span class="tI">
-    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$substitution"</span><span class="tXSLEl">&gt;</span><span class="tI">
-      </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"withPilcrows"</span><span class="tXSLEl">&gt;</span><span class="tI">
-        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> mode=</span><span class="tAV">"pilcrow"</span><span class="tXSLEl">/&gt;</span><span class="tI">
-      </span><span class="tXSLEl">&lt;/xsl:with-param&gt;</span><span class="tI">
-    </span><span class="tXSLEl">&lt;/xsl:apply-templates&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$substitution"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:result-document&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:result-document</span><span class="tAN"> href=</span><span class="tAV">"s.xhtml"</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$deletion"</span><span class="tXSLEl">/&gt;</span><span class="tI">
@@ -844,8 +840,8 @@
             <td class="rt_lB"></td>
             <td class="rt_cBR"></td>
          </tr>
-      </table><a id="M_nodeM_lbpilcrowS_tei2xhtml.xsl"></a><div class="cmpT">Template
-         <span class="titleTemplateMatch">node() | @*</span><span class="titleTemplateMode">lb pilcrow</span></div>
+      </table><a id="M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">node() | @*</span><span class="titleTemplateMode">lb pilcrow normalize-space</span></div>
       <table class="rt">
          <tr>
             <td class="rt_cTL"></td>
@@ -860,12 +856,13 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Documentation</div>
-                           <div class="flR"><input id="bt_dS_M_nodeM_lbpilcrowS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_nodeM_lbpilcrowS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_dS_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="dS_M_nodeM_lbpilcrowS_tei2xhtml.xsl" style="display:block">
+                           <div id="dS_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl" style="display:block">
                               <div>
-                                 <h3>Description</h3>Identity transformation for the "lb" and “pilcrow” modes passes.</div>
+                                 <h3>Description</h3>Identity transformation for the "lb", “pilcrow”, and "normalize-space" modes
+                                 passes.</div>
                            </div>
                         </td>
                      </tr>
@@ -879,7 +876,7 @@
                      </tr>
                      <tr>
                         <td class="fCol">Mode</td>
-                        <td>lb pilcrow</td>
+                        <td>lb pilcrow normalize-space</td>
                      </tr>
                      <tr>
                         <td class="fCol">Import precedence</td>
@@ -888,14 +885,14 @@
                      <tr>
                         <td class="fCol">
                            <div class="flL">Source</div>
-                           <div class="flR"><input id="bt_src_M_nodeM_lbpilcrowS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_nodeM_lbpilcrowS_tei2xhtml.xsl');" class="control" /></div>
+                           <div class="flR"><input id="bt_src_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="src_M_nodeM_lbpilcrowS_tei2xhtml.xsl" style="display:block">
+                           <div id="src_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl" style="display:block">
                               <table class="pWCont">
                                  <tr>
                                     <td width="100%">
-                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"node() | @*"</span><span class="tAN"> mode=</span><span class="tAV">"lb pilcrow"</span><span class="tXSLEl">&gt;</span><span class="tI">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"node() | @*"</span><span class="tAN"> mode=</span><span class="tAV">"lb pilcrow normalize-space"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:copy</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"node() | @*"</span><span class="tAN"> mode=</span><span class="tAV">"#current"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:copy&gt;</span><span class="tI">
@@ -1341,6 +1338,89 @@
             <td class="rt_lB"></td>
             <td class="rt_cBR"></td>
          </tr>
+      </table><a id="M_listSubstitutionS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">listSubstitution</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_listSubstitutionS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_listSubstitutionS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_listSubstitutionS_tei2xhtml.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Template to normalize the whitespace in <i>r.xhtml</i>. To create the list of
+                                 substitutions, in which the content of the source text needs to be extracted from
+                                 the
+                                 source file, we create a param that contains a version of the source file in which
+                                 paragraphs get transformed into pilcrows <a href=".html#" target="_self">withPilcrows</a>.
+                                 Then we generate the actual list of replacements which we hold in the variable <a href=".html#" target="_self">contents</a>, and then we normalize the white-space with the
+                                 mode "normalize-space". </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>listSubstitution</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>#default</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_listSubstitutionS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_listSubstitutionS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_listSubstitutionS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"listSubstitution"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"contents"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"withPilcrows"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"/"</span><span class="tAN"> mode=</span><span class="tAV">"pilcrow"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:with-param&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:apply-templates&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$contents"</span><span class="tAN"> mode=</span><span class="tAV">"normalize-space"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
       </table><a id="M_substitutionS_tei2xhtml.xsl"></a><div class="cmpT">Template
          <span class="titleTemplateMatch">substitution</span></div>
       <table class="rt">
@@ -1460,6 +1540,76 @@
       </span><span class="tXSLEl">&lt;xsl:sequence</span><span class="tAN"> select=</span><span class="tAV">"($source, ' → ', $replacement)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/li&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">text()[parent::*[local-name() eq 'a']][matches(., '\n')]</span><span class="titleTemplateMode">normalize-space</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Template to delete new lines in the list of replacements.</div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>text()[parent::*[local-name() eq 'a']][matches(., '\n')]</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>normalize-space</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_textparentlocal-nameeqamatches.nM_normalize-spaceS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> mode=</span><span class="tAV">"normalize-space"</span><span class="tAN"> match=</span><span class="tAV">"text()[parent::*[local-name() eq 'a']][matches(., '\n')]"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"normalize-space()"</span><span class="tXSLEl">/&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
                                     </td>
                                  </tr>

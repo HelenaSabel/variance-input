@@ -80,8 +80,8 @@
     </xd:doc>
     <xsl:template as="item()*" name="get-contents">
         <xsl:param as="xs:string?" name="target"/>
-        <xsl:param as="node()?" name="context"/>        
-        <xsl:apply-templates select="$context/*[(@target|@corresp) = $target]/node()"/>
+        <xsl:param as="node()?" name="context"/>
+        <xsl:apply-templates select="$context/*[(@target | @corresp) = $target]/node()"/>
     </xsl:template>
 
     <xd:doc>
@@ -119,10 +119,7 @@
         <xd:desc>Main template from which we genetare the 6 XHTML files using multimodal
             instructions. Note that there is a first transformation pass done via <xd:ref
                 name="withLineBreaks" type="variable"/> (mode "lb") to get rid of paragraphs and add
-            instead line breaks. To create the list of substitutions, in which the content of the
-            source text needs to be extracted from the source file, we create a param that
-            contains a version of the source file in which paragraphs get transformed into
-            pilcrows <xd:ref name="withPilcrows" type="param"/></xd:desc>
+            instead line breaks.</xd:desc>
     </xd:doc>
     <xsl:template match="/">
         <xsl:variable as="item()+" name="withLineBreaks">
@@ -135,11 +132,7 @@
             <xsl:apply-templates select="$addition"/>
         </xsl:result-document>
         <xsl:result-document href="r.xhtml">
-            <xsl:apply-templates select="$substitution">
-                <xsl:with-param name="withPilcrows">
-                    <xsl:apply-templates mode="pilcrow"/>
-                </xsl:with-param>
-            </xsl:apply-templates>
+            <xsl:apply-templates select="$substitution"/>
         </xsl:result-document>
         <xsl:result-document href="s.xhtml">
             <xsl:apply-templates select="$deletion"/>
@@ -157,9 +150,10 @@
     </xsl:template>
 
     <xd:doc>
-        <xd:desc>Identity transformation for the "lb" and “pilcrow” modes passes.</xd:desc>
+        <xd:desc>Identity transformation for the "lb", “pilcrow”, and "normalize-space" modes
+            passes.</xd:desc>
     </xd:doc>
-    <xsl:template match="node() | @*" mode="lb pilcrow">
+    <xsl:template match="node() | @*" mode="lb pilcrow normalize-space">
         <xsl:copy>
             <xsl:apply-templates select="node() | @*" mode="#current"/>
         </xsl:copy>
@@ -172,6 +166,7 @@
         <xsl:apply-templates select="node()" mode="lb"/>
         <lb xmlns="http://www.tei-c.org/ns/1.0"/>
     </xsl:template>
+
 
     <xd:doc>
         <xd:desc>Insertion of pilcrows for each paragraph.</xd:desc>
@@ -219,6 +214,26 @@
     </xsl:template>
 
     <xd:doc>
+        <xd:desc>Template to normalize the whitespace in <xd:i>r.xhtml</xd:i>. To create the list of
+            substitutions, in which the content of the source text needs to be extracted from the
+            source file, we create a param that contains a version of the source file in which
+            paragraphs get transformed into pilcrows <xd:ref name="withPilcrows" type="param"/>.
+            Then we generate the actual list of replacements which we hold in the variable <xd:ref
+                name="contents" type="variable"/>, and then we normalize the white-space with the
+            mode "normalize-space". </xd:desc>
+    </xd:doc>
+    <xsl:template match="listSubstitution">
+        <xsl:variable name="contents">
+            <xsl:apply-templates>
+                <xsl:with-param name="withPilcrows">
+                    <xsl:apply-templates select="/" mode="pilcrow"/>
+                </xsl:with-param>
+            </xsl:apply-templates>
+        </xsl:variable>
+        <xsl:apply-templates select="$contents" mode="normalize-space"/>
+    </xsl:template>
+
+    <xd:doc>
         <xd:desc>Template to create list of replacements for document
             <xd:i>r.xhtml</xd:i>.</xd:desc>
         <xd:param name="withPilcrows">Version of the source file with paragraphs transformed into
@@ -245,6 +260,14 @@
             </a>
         </li>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Template to delete new lines in the list of replacements.</xd:desc>
+    </xd:doc>
+    <xsl:template mode="normalize-space"
+        match="text()[parent::*[local-name() eq 'a']][matches(., '\n')]">
+        <xsl:value-of select="normalize-space()"/>
+    </xsl:template>
 
     <xd:doc>
         <xd:desc>Processing of <xd:b>tei:anchor</xd:b> elements for the generation of the source
@@ -254,7 +277,9 @@
         <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <a class="span_c sync sync-single" data-tags="" href="#bc_{variance:generate-number(.)}"
             id="ac_{variance:generate-number(.)}">
-            <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]" mode="source"/>
+            <xsl:apply-templates
+                select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
+                mode="source"/>
         </a>
     </xsl:template>
 
@@ -267,7 +292,8 @@
         <xsl:choose>
             <xsl:when test="@function eq 'del'">
                 <span class="span_s" data-tags="" id="as_{variance:get-id(./@target, $deletion)}">
-                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
+                    <xsl:apply-templates
+                        select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </span>
             </xsl:when>
@@ -276,7 +302,8 @@
                 <a class="sync sync-single span_r" data-tags=""
                     href="#br_{variance:get-id(./@target, $substitution)}"
                     id="ar_{variance:get-id(./@target, $substitution)}">
-                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
+                    <xsl:apply-templates
+                        select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </a>
             </xsl:when>
@@ -284,7 +311,8 @@
                 <a class="sync sync-single span_d" data-tags=""
                     href="#bd_{variance:get-id(./@target, $transposition)}"
                     id="ad_{variance:get-id(./@target, $transposition)}">
-                    <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
+                    <xsl:apply-templates
+                        select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
                         mode="#current"/>
                 </a>
             </xsl:when>
@@ -299,8 +327,9 @@
         <xsl:variable as="element()?" name="delimiter" select="variance:retrieve-next-anchor(.)"/>
         <a class="span_c sync sync-single" data-tags="" href="#ac_{variance:generate-number(.)}"
             id="bc_{variance:generate-number(.)}">
-            <xsl:apply-templates select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]" mode="#current"
-            />
+            <xsl:apply-templates
+                select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
+                mode="#current"/>
         </a>
     </xsl:template>
 
