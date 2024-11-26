@@ -248,7 +248,7 @@
         <xsl:variable as="item()+" name="replacement">
             <xsl:apply-templates/>
         </xsl:variable>
-        <xsl:variable name="source" as="item()+">
+        <xsl:variable name="source" as="item()*">
             <xsl:apply-templates
                 select="$anchor/following::node()[not(parent::emph[. ne $anchor/parent::*])][. &lt;&lt; $delimiter]"
             />
@@ -256,7 +256,7 @@
         <li>
             <a class="sync sync-twice" data-tags="" href="#ar_{variance:generate-number(.)}"
                 id="lbr_{variance:generate-number(.)}">
-                <xsl:sequence select="($source, ' &#8594; ', $replacement)"/>
+                <xsl:sequence select="(if ($source) then $source else 'NO SOURCE CONTENTS FOUND', ' &#8594; ', $replacement)"/>
             </a>
         </li>
     </xsl:template>
