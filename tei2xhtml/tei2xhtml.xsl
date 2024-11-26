@@ -81,7 +81,15 @@
     <xsl:template as="item()*" name="get-contents">
         <xsl:param as="xs:string?" name="target"/>
         <xsl:param as="node()?" name="context"/>
-        <xsl:apply-templates select="$context/*[(@target | @corresp) = $target]/node()"/>
+        <xsl:variable name="edition" select="$context/*[(@target | @corresp) = $target]"/>
+        <xsl:choose>
+            <xsl:when test="$edition[@type eq 'paragraphe']">
+                <br/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="$edition/node()"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xd:doc>
@@ -114,6 +122,7 @@
     <xsl:variable as="element()" name="addition" select="//listAddition"/>
     <xsl:variable as="element()" name="substitution" select="//listSubstitution"/>
     <xsl:variable as="element()" name="deletion" select="//listDeletion"/>
+    <xsl:variable as="xs:string*" name="deletedParagraphs" select="//deletion[@type eq 'paragraphe']/@corresp"/>
 
     <xd:doc>
         <xd:desc>Main template from which we genetare the 6 XHTML files using multimodal
@@ -150,7 +159,7 @@
     </xsl:template>
 
     <xd:doc>
-        <xd:desc>Identity transformation for the "lb", “pilcrow”, and "normalize-space" modes
+        <xd:desc>Identity transformation for the "lb", "pilcrow", and "normalize-space" modes
             passes.</xd:desc>
     </xd:doc>
     <xsl:template match="node() | @*" mode="lb pilcrow normalize-space">
@@ -196,7 +205,14 @@
         <li>
             <a class="sync" data-tags="" href="#as_{variance:generate-number(.)}"
                 id="lbs_{variance:generate-number(.)}">
-                <xsl:apply-templates/>
+                <xsl:choose>
+                    <xsl:when test="@type eq 'paragraphe'">
+                        <xsl:text>¶</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:apply-templates/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </a>
         </li>
     </xsl:template>
@@ -208,7 +224,14 @@
         <li>
             <a class="sync" data-tags="" href="#bi_{variance:generate-number(.)}"
                 id="lai_{variance:generate-number(.)}">
-                <xsl:apply-templates/>
+                <xsl:choose>
+                    <xsl:when test="@type eq 'paragraphe'">
+                        <xsl:text>¶</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:apply-templates/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </a>
         </li>
     </xsl:template>
@@ -256,11 +279,16 @@
         <li>
             <a class="sync sync-twice" data-tags="" href="#ar_{variance:generate-number(.)}"
                 id="lbr_{variance:generate-number(.)}">
-                <xsl:sequence select="(if ($source) then $source else 'NO SOURCE CONTENTS FOUND', ' &#8594; ', $replacement)"/>
+                <xsl:sequence select="
+                        (if ($source) then
+                            $source
+                        else
+                            'NO SOURCE CONTENTS FOUND', ' &#8594; ', $replacement)"
+                />
             </a>
         </li>
     </xsl:template>
-    
+
     <xd:doc>
         <xd:desc>Template to delete new lines in the list of replacements.</xd:desc>
     </xd:doc>
@@ -292,9 +320,16 @@
         <xsl:choose>
             <xsl:when test="@function eq 'del'">
                 <span class="span_s" data-tags="" id="as_{variance:get-id(./@target, $deletion)}">
-                    <xsl:apply-templates
-                        select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
-                        mode="#current"/>
+                    <xsl:choose>
+                        <xsl:when test="@target = $deletedParagraphs">
+                            <br/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates
+                                select="./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"
+                                mode="#current"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </span>
             </xsl:when>
             <xsl:when test="@function eq 'add'"/>
