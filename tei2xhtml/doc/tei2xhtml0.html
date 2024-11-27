@@ -22,6 +22,7 @@
 				'uB_V_additionS_tei2xhtml.xsl', 
 				'uB_V_substitutionS_tei2xhtml.xsl', 
 				'uB_V_deletionS_tei2xhtml.xsl', 
+				'uB_V_deletedParagraphsS_tei2xhtml.xsl', 
 				'uB_F_generate-numberS_tei2xhtml.xsl', 
 				'uB_F_get-idS_tei2xhtml.xsl', 
 				'uB_F_retrieve-next-anchorS_tei2xhtml.xsl');
@@ -80,6 +81,7 @@
 				'src_V_additionS_tei2xhtml.xsl', 
 				'src_V_substitutionS_tei2xhtml.xsl', 
 				'src_V_deletionS_tei2xhtml.xsl', 
+				'src_V_deletedParagraphsS_tei2xhtml.xsl', 
 				'src_F_generate-numberS_tei2xhtml.xsl', 
 				'src_F_get-idS_tei2xhtml.xsl', 
 				'src_F_retrieve-next-anchorS_tei2xhtml.xsl', 
@@ -583,7 +585,15 @@
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> as=</span><span class="tAV">"item()*"</span><span class="tAN"> name=</span><span class="tAV">"get-contents"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> as=</span><span class="tAV">"xs:string?"</span><span class="tAN"> name=</span><span class="tAV">"target"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> as=</span><span class="tAV">"node()?"</span><span class="tAN"> name=</span><span class="tAV">"context"</span><span class="tXSLEl">/&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$context/*[(@target | @corresp) = $target]/node()"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"edition"</span><span class="tAN"> select=</span><span class="tAV">"$context/*[(@target | @corresp) = $target]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$edition[@type eq 'paragraphe']"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;br</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$edition/node()"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
                                     </td>
                                  </tr>
@@ -861,7 +871,7 @@
                         <td>
                            <div id="dS_M_nodeM_lbpilcrownormalize-spaceS_tei2xhtml.xsl" style="display:block">
                               <div>
-                                 <h3>Description</h3>Identity transformation for the "lb", “pilcrow”, and "normalize-space" modes
+                                 <h3>Description</h3>Identity transformation for the "lb", "pilcrow", and "normalize-space" modes
                                  passes.</div>
                            </div>
                         </td>
@@ -1224,7 +1234,14 @@
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"deletion"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;li</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"sync"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#as_{variance:generate-number(.)}"</span><span class="tAN"> id=</span><span class="tAV">"lbs_{variance:generate-number(.)}"</span><span class="tEl">&gt;</span><span class="tI">
-      </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@type eq 'paragraphe'"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:text</span><span class="tXSLEl">&gt;</span><span class="tT">¶</span><span class="tXSLEl">&lt;/xsl:text&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/li&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
@@ -1318,7 +1335,14 @@
                                        <pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"addition"</span><span class="tXSLEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;li</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"sync"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#bi_{variance:generate-number(.)}"</span><span class="tAN"> id=</span><span class="tAV">"lai_{variance:generate-number(.)}"</span><span class="tEl">&gt;</span><span class="tI">
-      </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@type eq 'paragraphe'"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:text</span><span class="tXSLEl">&gt;</span><span class="tT">¶</span><span class="tXSLEl">&lt;/xsl:text&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/li&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
@@ -1532,12 +1556,12 @@
   </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"item()+"</span><span class="tAN"> name=</span><span class="tAV">"replacement"</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
-  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"source"</span><span class="tAN"> as=</span><span class="tAV">"item()+"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"source"</span><span class="tAN"> as=</span><span class="tAV">"item()*"</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$anchor/following::node()[not(parent::emph[. ne $anchor/parent::*])][. &lt;&lt; $delimiter]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
   </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
   </span><span class="tEl">&lt;li</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"sync sync-twice"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> href=</span><span class="tAV">"#ar_{variance:generate-number(.)}"</span><span class="tAN"> id=</span><span class="tAV">"lbr_{variance:generate-number(.)}"</span><span class="tEl">&gt;</span><span class="tI">
-      </span><span class="tXSLEl">&lt;xsl:sequence</span><span class="tAN"> select=</span><span class="tAV">"($source, ' → ', $replacement)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:sequence</span><span class="tAN"> select=</span><span class="tAV">"                         (if ($source) then                             $source                         else                             'NO SOURCE CONTENTS FOUND', ' → ', $replacement)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/li&gt;</span><span class="tI">
 </span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre>
@@ -1781,6 +1805,7 @@
                                     <td class="fCol">Variables</td>
                                     <td>
                                        <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#V_deletedParagraphsS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')">deletedParagraphs</a><span class="refItemSep">;</span></div>
                                           <div class="refItemBlock"><a href="tei2xhtml0.html#V_deletionS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')">deletion</a><span class="refItemSep">;</span></div>
                                           <div class="refItemBlock"><a href="tei2xhtml0.html#V_substitutionS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')">substitution</a><span class="refItemSep">;</span></div>
                                           <div class="refItemBlock"><a href="tei2xhtml0.html#V_transpositionS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')">transposition</a></div>
@@ -1810,7 +1835,14 @@
   </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'del'"</span><span class="tXSLEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"span_s"</span><span class="tAN"> data-tags=</span><span class="tAV">""</span><span class="tAN"> id=</span><span class="tAV">"as_{variance:get-id(./@target, $deletion)}"</span><span class="tEl">&gt;</span><span class="tI">
-        </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"</span><span class="tAN"> mode=</span><span class="tAV">"#current"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@target = $deletedParagraphs"</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;br</span><span class="tEl">/&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"./following::node()[not(parent::emph[. ne current()/parent::*])][. &lt;&lt; $delimiter]"</span><span class="tAN"> mode=</span><span class="tAV">"#current"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
     </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"@function eq 'add'"</span><span class="tXSLEl">/&gt;</span><span class="tI">
@@ -2866,6 +2898,78 @@
                                  <tr>
                                     <td width="100%">
                                        <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"element()"</span><span class="tAN"> name=</span><span class="tAV">"deletion"</span><span class="tAN"> select=</span><span class="tAV">"//listDeletion"</span><span class="tXSLEl">/&gt;</span></pre>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_deletedParagraphsS_tei2xhtml.xsl"></a><div class="cmpT">Variable
+         <span class="qname">deletedParagraphs</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>//deletion[@type eq 'paragraphe']/@corresp</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Type</td>
+                        <td>xs:string*</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_V_deletedParagraphsS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_deletedParagraphsS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_V_deletedParagraphsS_tei2xhtml.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="tei2xhtml0.html#M_metamarkM_sourceS_tei2xhtml.xsl" target="_self" title="No namespace" onclick="updPT('tei2xhtml.xsl')"><span class="mRf">metamark</span><span class="mdRf">source</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_deletedParagraphsS_tei2xhtml.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_deletedParagraphsS_tei2xhtml.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_deletedParagraphsS_tei2xhtml.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%">
+                                       <pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> as=</span><span class="tAV">"xs:string*"</span><span class="tAN"> name=</span><span class="tAV">"deletedParagraphs"</span><span class="tAN"> select=</span><span class="tAV">"//deletion[@type eq 'paragraphe']/@corresp"</span><span class="tXSLEl">/&gt;</span></pre>
                                     </td>
                                  </tr>
                               </table>
